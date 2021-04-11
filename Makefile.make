@@ -17,4 +17,4 @@ testData:
 
 clean:
         $(RM) *.class
-~                      
+                  
