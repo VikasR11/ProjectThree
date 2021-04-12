@@ -8,13 +8,13 @@
 // Notes to Grader: None
 
 public interface BackendInterface {
-    AirportInterface[] getAirportShortestPath(AirportInterface start, AirportInterface end);
+    AirportInterface[] getAirportShortestPath(String startAirportID, String endAirportID);
     boolean addAirport(AirportInterface airport);
-    boolean addFlight(AirportInterface source, AirportInterface destination, double distance);
+    boolean addFlight(String sourceID, String destinationID, double distance);
     AirportInterface[] getReachableAirports(AirportInterface origin);
-    boolean removeAirport(AirportInterface airport);
-    boolean removeFlight(AirportInterface origin, AirportInterface destination);
-    double getPriceForAirportPath(AirportInterface start, AirportInterface end);
+    boolean removeAirport(String airportID);
+    boolean removeFlight(String origin, String destinationID);
+    double getPriceForAirportPath(String startAirportID, String endAirportID);
     int getAirportCount();
     int getFlightCount();
 }
