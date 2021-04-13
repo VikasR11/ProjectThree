@@ -18,10 +18,10 @@ import java.util.zip.DataFormatException;
 /**
  * Backend class handles all airports and flights (and related data), storing them in a directed, weighted
  * graph data structure. The methods of the backend will be used by the frontend to do all the functions that the
- * Flight Tracker application must do. This includes adding/removing airports/flights, finding the shortest 
- * path (by distance) between two airports, getting all reachable airports from a given airport, and 
+ * Flight Tracker application must do. This includes adding/removing airports/flights, finding the shortest
+ * path (by distance) between two airports, getting all reachable airports from a given airport, and
  * finding the cost of traveling through the shortest path between two airports.
- * 
+ *
  * @author Rohan Putcha
  */
 public class Backend implements BackendInterface {
@@ -233,14 +233,14 @@ public class Backend implements BackendInterface {
             return -1; // this -1 means there is no flight connection - frontend handles this
         }
         double priceCounter = 0; // this will keep track of the total cost to travel
-        for (int i = 0; i < shortestPath.size() - 1; i++) { 
+        for (int i = 0; i < shortestPath.size() - 1; i++) {
             // this for loop goes through each airport in the list of airports for the calculated shortest path
             List<String> destinationIDs = shortestPath.get(i).reachables(); // holds all destinations from source
             for (int j = 0; j < destinationIDs.size(); j++) {
                 // this for loop goes through all possible destinations from each airport in the shortest path
                 String destination = destinationIDs.get(j); // holds an individual destination from each airport
-                if (destination.equals(shortestPath.get(i + 1).getID())) { 
-                    // this if statement is entered if the next airport in the (shortest) path of airports 
+                if (destination.equals(shortestPath.get(i + 1).getID())) {
+                    // this if statement is entered if the next airport in the (shortest) path of airports
                     // is equal to an individual destination. This means the target is found, and the price may
                     // be updated accordingly. Then, since the next airport in the shortest path list has been found,
                     // we may break and repeat this process with the next airport in the list
@@ -327,5 +327,10 @@ public class Backend implements BackendInterface {
                         airport.distances().get(i));
             }
         }
+    }
+    
+    public void getGraph() {
+        for (AirportInterface a : listOfAirports) 
+            System.out.println(a.getID() + ": "+a.getName());
     }
 }
