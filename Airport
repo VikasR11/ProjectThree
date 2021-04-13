@@ -1,0 +1,50 @@
+import java.util.List;
+
+public class Airport implements AirportInterface {
+  private String name;
+  private String ID;
+  private List<String> reachables;
+  private List<Integer> distances;
+  private List<Double> costs;
+  
+  /**
+   * Constructor to initialize an Airport object
+   * @param dest
+   * @param orig
+   */
+  public Airport(String name, String nameID, List<String> reachables, List<Integer> dist, List<Double> costs) {
+    this.name = name;
+    this.ID = nameID;
+    this.reachables = reachables;
+    this.distances = dist;
+    this.costs = costs;
+  }
+
+  public String getID() {
+    // TODO Auto-generated method stub
+    return ID;
+  }
+
+  public String getName() {
+    // TODO Auto-generated method stub
+    return name;
+  }
+
+  public List<Integer> distances() {
+    // TODO Auto-generated method stub
+    return distances;
+  }
+
+  public List<Double> costs() {
+    // TODO Auto-generated method stub
+    return costs;
+  }
+
+  public List<String> reachables() {
+    // TODO Auto-generated method stub
+    return reachables;
+  }
+  
+  
+  
+}
