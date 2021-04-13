@@ -7,10 +7,6 @@
 // Lecturer: Gary Dahl
 // Notes to Grader: None
 
-
-import java.awt.List;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.zip.DataFormatException;
