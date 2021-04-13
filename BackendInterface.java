@@ -11,7 +11,7 @@ public interface BackendInterface {
     AirportInterface[] getAirportShortestPath(String startAirportID, String endAirportID);
     boolean addAirport(AirportInterface airport);
     boolean addFlight(String sourceID, String destinationID, double distance);
-    AirportInterface[] getReachableAirports(AirportInterface origin);
+    AirportInterface[] getReachableAirports(String origin);
     boolean removeAirport(String airportID);
     boolean removeFlight(String origin, String destinationID);
     double getPriceForAirportPath(String startAirportID, String endAirportID);
