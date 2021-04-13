@@ -41,7 +41,7 @@ public class DataReader implements DataReaderInterface {
                 String destinationID = header[3]; // id of the destination
                 String destinationName = header[2]; // name of destination
                 double cost = Double.parseDouble(header[0]); // cost of the flight
-                int distance = (int)Double.parseDouble(header[9]); // distance of the flight
+                int distance = (int)Double.parseDouble(header[8]); // distance of the flight
                 if(!hash.containsKey(airportName)) {
                     ArrayList<String> tempDestID = new ArrayList<String>(); tempDestID.add(destinationID);
                     ArrayList<Double> costs = new ArrayList<Double>(); costs.add(cost);
