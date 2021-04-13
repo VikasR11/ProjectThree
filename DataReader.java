@@ -64,18 +64,3 @@ public class DataReader implements DataReaderInterface {
     return listAirports;
   }
 }
-          ArrayList<String> tempDestID = new ArrayList<String>(); tempDestID.add(destinationID);
-          ArrayList<Double> costs = new ArrayList<Double>(); costs.add(cost);
-          ArrayList<Integer> distances = new ArrayList<Integer>(); distances.add(distance);
-          hash.put(airportName, new Airport(airportName, header[18], tempDestID, distances, costs));
-        } else {
-          hash.get(airportName).costs().add(cost);
-          hash.get(airportName).distances().add(distance);
-          hash.get(airportName).reachables().add(destinationID);
-        }
-      }
-    }
-    ArrayList<AirportInterface> listAirports = new ArrayList<AirportInterface>(hash.values());
-    return listAirports;
-  }
-}
