@@ -21,4 +21,5 @@ public interface BackendInterface {
     int getDistanceForAirportPath(String startAirportID, String endAirportID) throws NoSuchElementException;
     int getAirportCount();
     int getFlightCount();
+    void getGraph();
 }
