@@ -323,14 +323,19 @@ public class Backend implements BackendInterface {
             List<String> destinationIDs = airport.reachables();
             // this for loop goes through each 'flight' for each airport and creates a new edge in the graph for it
             for (int i = 0; i < destinationIDs.size(); i++) {
+                System.out.println(destinationIDs.get(i));
                 airportSystem.insertEdge(airport, stringToAirport.get(destinationIDs.get(i)),
                         airport.distances().get(i));
             }
         }
     }
-    
+
+    /**
+     * Additional method used by the frontend to list all possible airport IDs. Since only the backend class
+     * has access to the graph elements (airports), it is placed here.
+     */
     public void getGraph() {
-        for (AirportInterface a : listOfAirports) 
+        for (AirportInterface a : listOfAirports)
             System.out.println(a.getID() + ": "+a.getName());
     }
 }
