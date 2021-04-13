@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface AirportInterface {
 
-  public String getFlightWeight(String node1, String node2);
-  public String getAirport();
-  public List<String> flightPath(String dest1, String dest2);
-  public boolean addFlight(String flight);
-  public void setFlight(String flight);
+  public String getID();
+  public String getName();
+  public List<Integer> distances();
+  public List<Double> costs();
+  public List<String> reachables();
 }
