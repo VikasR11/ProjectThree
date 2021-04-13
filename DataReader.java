@@ -37,16 +37,16 @@ public class DataReader implements DataReaderInterface {
             while(scan.hasNextLine()) {
                 // stores Airport attribute names into an array of Strings
                 String[] header = temp.split(",");
-                String airportName = header[2]; // name of the airport
-                String destinationID = header[17]; // id of the destination
-                String destinationName = header[16]; // name of destination
+                String airportName = header[16]; // name of the airport
+                String destinationID = header[3]; // id of the destination
+                String destinationName = header[2]; // name of destination
                 double cost = Double.parseDouble(header[0]); // cost of the flight
                 int distance = (int)Double.parseDouble(header[9]); // distance of the flight
                 if(!hash.containsKey(airportName)) {
                     ArrayList<String> tempDestID = new ArrayList<String>(); tempDestID.add(destinationID);
                     ArrayList<Double> costs = new ArrayList<Double>(); costs.add(cost);
                     ArrayList<Integer> distances = new ArrayList<Integer>(); distances.add(distance);
-                    hash.put(airportName, new Airport(airportName, header[3], tempDestID, distances, costs));
+                    hash.put(airportName, new Airport(airportName, header[17], tempDestID, distances, costs));
                 } else {
                     hash.get(airportName).costs().add(cost);
                     hash.get(airportName).distances().add(distance);
