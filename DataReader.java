@@ -37,16 +37,33 @@ public class DataReader implements DataReaderInterface {
     Scanner scan = new Scanner(inputFileReader); // scanning the CSV file
     String temp = scan.nextLine(); // next line of the CSV
     if(temp != null) {
-      temp = scan.nextLine();
+      temp = scan.nextLine(); temp = temp.substring(1);
       while(scan.hasNextLine()) {
         // stores Airport attribute names into an array of Strings
         String[] header = temp.split(",");
+        for (int i = 0; i < header.length; i++) {
+        }
         
         String airportName = header[17]; // name of the airport
         String destinationID = header[3]; // id of the destination
         double cost = Double.parseDouble(header[0]); // cost of the flight
         int distance = (int)Double.parseDouble(header[9]); // distance of the flight
         if(!hash.containsKey(airportName)) {
+          ArrayList<String> tempDestID = new ArrayList<String>(); tempDestID.add(destinationID);
+          ArrayList<Double> costs = new ArrayList<Double>(); costs.add(cost);
+          ArrayList<Integer> distances = new ArrayList<Integer>(); distances.add(distance);
+          hash.put(airportName, new Airport(airportName, header[18], tempDestID, distances, costs));
+        } else {
+          hash.get(airportName).costs().add(cost);
+          hash.get(airportName).distances().add(distance);
+          hash.get(airportName).reachables().add(destinationID);
+        }
+      }
+    }
+    ArrayList<AirportInterface> listAirports = new ArrayList<AirportInterface>(hash.values());
+    return listAirports;
+  }
+}
           ArrayList<String> tempDestID = new ArrayList<String>(); tempDestID.add(destinationID);
           ArrayList<Double> costs = new ArrayList<Double>(); costs.add(cost);
           ArrayList<Integer> distances = new ArrayList<Integer>(); distances.add(distance);
