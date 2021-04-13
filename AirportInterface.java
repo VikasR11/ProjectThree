@@ -9,6 +9,11 @@
 
 import java.util.List;
 
+/**
+ * Interface to be implemented by the Data Wrangler to create an Airport object
+ * @author arnav
+ *
+ */
 public interface AirportInterface {
 
   public String getID();
