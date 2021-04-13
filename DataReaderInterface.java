@@ -7,6 +7,7 @@
 // Lecturer: Gary Dahl
 // Notes to Grader: None
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +21,6 @@ import java.util.zip.DataFormatException;
  *
  */
 public interface DataReaderInterface {
-  public Hashtable<String, AirportInterface> readDataSet(Reader inputFileReader) throws IOException,
+  public ArrayList<AirportInterface> readDataSet(Reader inputFileReader) throws IOException,
   DataFormatException;
 }
