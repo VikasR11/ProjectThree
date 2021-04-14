@@ -131,7 +131,7 @@ public class Frontend {
         String abbr = scanner.next();
         if (abbr.equals("x"))
             return;
-        
+
         scanner.useDelimiter(System.lineSeparator());
         System.out.println("\nEnter Airport's name: ");
         String name = scanner.next();
@@ -324,8 +324,8 @@ public class Frontend {
                 int dist = 0;
                 for (AirportInterface air: shortestPathList) {
                     conc += air.getID() + " -> ";
-                    dist += backend.getDistanceForAirportPath(departure, arrival);
                 }
+                dist = backend.getDistanceForAirportPath(departure, arrival);
                 System.out.println(conc.substring(0,conc.length()-4));
                 System.out.println("Total Distance: " + dist + "km");
             }
