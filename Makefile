@@ -35,8 +35,8 @@ test: testData testBackend testFrontend
 testData: DataWranglerTests.class
 	java DataWranglerTests
 	
-testBackend: TestBackend.class
-	java TestBackend
+testBackend: BackendDeveloperTests.class
+	java BackendDeveloperTests
 	
 testFrontend: FrontEndDeveloperTests.class
 	java FrontEndDeveloperTests
@@ -44,8 +44,8 @@ testFrontend: FrontEndDeveloperTests.class
 DataWranglerTests.class: DataWranglerTests.java
 	javac DataWranglerTests.java	
 
-TestBackend.class: TestBackend.java
-	javac TestBackend.java
+BackendDeveloperTests.class: BackendDeveloperTests.java
+	javac BackendDeveloperTests.java
 
 FrontEndDeveloperTests.class: FrontEndDeveloperTests.java
 	javac FrontEndDeveloperTests.java
