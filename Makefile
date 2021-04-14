@@ -32,23 +32,23 @@ DataReaderInterface.class: DataReaderInterface.java
 
 test: testData testBackend testFrontend
 
-testFrontend: TestFrontend.class
-	java TestFrontend
-
+testData: DataReader.class
+	java DataReader
+	
 testBackend: TestBackend.class
 	java TestBackend
-
-testData: TestMovieAndMovieDataReader.class
-	java TestMovieAndMovieDataReader
-
-TestFrontend.class: TestFrontend.java
-	javac TestFrontend.java
+	
+testFrontend: TestFrontend.class
+	java TestFrontend
+	
+DataReader.class: DataReader.java
+	javac DataReader.java	
 
 TestBackend.class: TestBackend.java
 	javac TestBackend.java
 
-TestMovieAndMovieDataReader.class: TestMovieAndMovieDataReader.java
-	javac TestMovieAndMovieDataReader.java
+TestFrontend.class: TestFrontend.java
+	javac TestFrontend.java
 
 clean:
         $(RM) *.class
