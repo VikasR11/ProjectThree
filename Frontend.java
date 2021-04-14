@@ -83,8 +83,8 @@ public class Frontend {
             System.out.println("\nMain screen");
             System.out.println("-----------");
             System.out.println("You can add your airport, delete an existing one, find the shortest"
-                + " path between 2 airports,\nfind reachable airports from another airport, "
-                + "and find out the ticket price between 2 airports!");
+                    + " path between 2 airports,\nfind reachable airports from another airport, "
+                    + "and find out the ticket price between 2 airports!");
             System.out.println("\nWhat would you like to do?");
             System.out.println("\t1) Enter 'a' to go to add mode");
             System.out.println("\t2) Enter 'd' to go to delete mode");
@@ -102,11 +102,11 @@ public class Frontend {
             else if (command.equals("d"))
                 deleteAirport(backend);
             else if (command.equals("f"))
-              findShortestPath(backend);
+                findShortestPath(backend);
             else if (command.equals("g"))
-              findReachableAirports(backend);
+                findReachableAirports(backend);
             else if (command.equals("y"))
-              backend.getGraph();
+                backend.getGraph();
         }
         // once while loop exits (x is entered), call end screen
         endScreen();
@@ -124,139 +124,141 @@ public class Frontend {
         System.out.println("\nAdd Mode");
         System.out.println("--------");
         System.out.println("You will now add information for the aiport to be added."
-            + " Type 'x' at any point to exit add mode.\n");
+                + " Type 'x' at any point to exit add mode.\n");
         // Add an Airport's name, abbreviation, list of reachable airports, distance of reachable
-          // airports, and ticket price.
+        // airports, and ticket price.
         System.out.println("Enter Airport's abbreviation: ");
         String abbr = scanner.next();
         if (abbr.equals("x"))
             return;
-        
+
         System.out.println("\nEnter Airport's name: ");
         String name = scanner.next();
         if (name.equals("x"))
             return;
-        
+
         scanner.useDelimiter(System.lineSeparator());
         System.out.println("\nEnter Airport's list of reachable airports (by abbreviation)"
-            + " like so: SFO,TUL,YWG");
+                + " like so: SFO,TUL,YWG");
         String reachAirports = scanner.next();
         reachAirports = reachAirports.replaceAll(" ","");
         String[] arrAirports = reachAirports.split(",");
         List<String> arrAirportsList = Arrays.asList(arrAirports);
         if (reachAirports.equals("x"))
-          return;
-                  
+            return;
+
         System.out.print("\nEnter Airport's list of distances(km) for each reachable airports like so"
-            + "(RESPECTIVELY): 25546,3454,985\n");
+                + "(RESPECTIVELY): 25546,3454,985\n");
         String reachDist = scanner.next();
         reachDist = reachDist.replaceAll(" ","");
         String[] arrDist = reachDist.split(",");
         Integer[] arrDistInt = new Integer[arrDist.length];
         for (int i = 0; i < arrDistInt.length; i++) {
-          arrDistInt[i] = Integer.parseInt(arrDist[i]);
+            arrDistInt[i] = Integer.parseInt(arrDist[i]);
         }
         List<Integer> arrDistIntList = Arrays.asList(arrDistInt);
         if (reachDist.equals("x"))
             return;
-        
+
         System.out.print("\nEnter Airport's list of ticket prices for each reachable airports like"
-            + "so(RESPECTIVELY): 432.00,566.44,199.54\n");
+                + "so(RESPECTIVELY): 432.00,566.44,199.54\n");
         String reachPrice = scanner.next();
         reachPrice = reachPrice.replaceAll(" ","");
         String[] arrPrice = reachPrice.split(",");
         Double[] arrPriceDouble = new Double[arrPrice.length];
         for (int i = 0; i < arrPriceDouble.length; i++) {
-          arrPriceDouble[i] = Double.parseDouble(arrPrice[i]);
+            arrPriceDouble[i] = Double.parseDouble(arrPrice[i]);
         }
         List<Double> arrPriceDoubleList = Arrays.asList(arrPriceDouble);
         if (reachDist.equals("x"))
-          return;
-        
+            return;
+
+
+        // Use airport constructor to create a new airport out of given attributes:
+        AirportInterface airport = new Airport(name, abbr, arrAirportsList, arrDistIntList, arrPriceDoubleList);
+        // Add airport to graph, and check if it was successfully added:
+        boolean added = backend.addAirport(airport);
+        if(!added) { System.out.println("***Unable to add airport!***\n\t1) Check that your inputted list of "
+                + "reachable airports in abbreviated form (ATL) all exist!\n\t2) Check that your airport"
+                + " has not already been added!"); }
+        else {
+            System.out.println("***Added Airport Successfully!***");
+        }
+
+
         // Now the user is asked to connect flights to the new airport
         // User is asked if they want to add flights arriving to the new airport
         scanner.reset();
         boolean goodIn = true;
         while (goodIn) {
-          System.out.print("\nFor any reachable airport entered: " + "\"" + reachAirports + "\"" + ". Would"
-              + " you like to add a flight going TO the new airport? (y/n)");
-          String ans = scanner.next();
-          if (ans.equals("x"))
-            return;
-            if (ans.equalsIgnoreCase("y")) {
-              for (int i = 0; i < arrAirports.length; i++) {
-                System.out.println("Do you want to add a departing flight from " + arrAirports[i] +"?(y/n)");
-                ans = scanner.next();
-                if (ans.equals("x"))
-                  return;
-                if (ans.equalsIgnoreCase("y")) {
-                  System.out.println(arrAirports[i]);
-                  backend.addFlight(arrAirports[i], abbr, arrDistInt[i]);
-                  System.out.println("======ADDED======");
-                }else {
-                  //guarantees the while loop runs if its not yes.
-                }
-                System.out.println();
-              }
-              System.out.println(" --- Completed (1/2) --- \n");
-              goodIn = false;
-            }else if (ans.equalsIgnoreCase("n")) {
-              System.out.println(" --- Completed (1/2) --- \n");
-              goodIn = false;
-            }else {
-              if (goodIn)System.out.println("Enter a valid command!");
-            }
-        }
-        
-          // User is asked if they want to add flights arriving from the new airport
-          goodIn = true;
-          while (goodIn) {
-            System.out.print("For any reachable airport entered: " + "\"" + reachAirports + "\"" + ". Would you"
-                + " you like to add a flight arriving from the new airport? (y/n)");
+            System.out.print("\nFor any reachable airport entered: " + "\"" + reachAirports + "\"" + ". Would"
+                    + " you like to add a flight going TO the new airport? (y/n)");
             String ans = scanner.next();
             if (ans.equals("x"))
-              return;
-              if (ans.equalsIgnoreCase("y")) {
+                return;
+            if (ans.equalsIgnoreCase("y")) {
                 for (int i = 0; i < arrAirports.length; i++) {
-                  System.out.println("Do you want to add an arrival flight to " + arrAirports[i] +"?(y/n)");
-                  ans = scanner.next();
-                  if (ans.equals("x"))
-                    return;
-                  if (ans.equalsIgnoreCase("y")) {
-                    System.out.println(arrAirports[i]);
-                    backend.addFlight(abbr, arrAirports[i], arrDistInt[i]);
-                    System.out.println("======ADDED======");
-                  }else {
-                    //guarantees the while loop runs if its not yes.
-                  }
-                  System.out.println();
+                    System.out.println("Do you want to add a departing flight from " + arrAirports[i] +"?(y/n)");
+                    ans = scanner.next();
+                    if (ans.equals("x"))
+                        return;
+                    if (ans.equalsIgnoreCase("y")) {
+                        backend.addFlight(arrAirports[i], abbr, arrDistInt[i]);
+                        System.out.println("======ADDED======");
+                    }else {
+                        //guarantees the while loop runs if its not yes.
+                    }
+                    System.out.println();
                 }
                 System.out.println(" --- Completed (1/2) --- \n");
                 goodIn = false;
-              }else if (ans.equalsIgnoreCase("n")) {
+            }else if (ans.equalsIgnoreCase("n")) {
+                System.out.println(" --- Completed (1/2) --- \n");
+                goodIn = false;
+            }else {
+                if (goodIn)System.out.println("Enter a valid command!");
+            }
+        }
+
+        // User is asked if they want to add flights arriving from the new airport
+        goodIn = true;
+        while (goodIn) {
+            System.out.print("For any reachable airport entered: " + "\"" + reachAirports + "\"" + ". Would you"
+                    + " you like to add a flight arriving from the new airport? (y/n)");
+            String ans = scanner.next();
+            if (ans.equals("x"))
+                return;
+            if (ans.equalsIgnoreCase("y")) {
+                for (int i = 0; i < arrAirports.length; i++) {
+                    System.out.println("Do you want to add an arrival flight to " + arrAirports[i] +"?(y/n)");
+                    ans = scanner.next();
+                    if (ans.equals("x"))
+                        return;
+                    if (ans.equalsIgnoreCase("y")) {
+                        backend.addFlight(abbr, arrAirports[i], arrDistInt[i]);
+                        System.out.println("======ADDED======");
+                    }else {
+                        //guarantees the while loop runs if its not yes.
+                    }
+                    System.out.println();
+                }
                 System.out.println(" --- Completed (2/2) --- \n");
                 goodIn = false;
-              }else {
+            }else if (ans.equalsIgnoreCase("n")) {
+                System.out.println(" --- Completed (2/2) --- \n");
+                goodIn = false;
+            }else {
                 if (goodIn)System.out.println("Enter a valid command!");
-              }
-          }
-        
-        // Use airport constructor to create a new airport out of given attributes:
-        AirportInterface airport = new Airport(abbr, name, arrAirportsList, arrDistIntList, arrPriceDoubleList);
-        // Add airport to graph, and check if it was successfully added:
-        boolean added = backend.addAirport(airport);
-        if(!added) { System.out.println("***Unable to add airport!***\n\t1) Check that your inputted list of "
-            + "reachable airports in abbreviated form (ATL) all exist!\n\t2) Check that your airport"
-            + " has not already been added!"); }
-        else {
-          System.out.println("***Added Airport Successfully!***");
+            }
         }
+
+
     }
-    
+
     /**
      * The program enters delete mode when 'd' is entered from the main screen. Here, the user is able to delete
      * an airport by providing the airportID. The user is prompted for this field. Entering 'x' at any time will exit the method.
-     * 
+     *
      * @param backend the backend object's deleteAirport method is used to add the new airport which was created
      *                by combining all the given attributes into the constructor.
      */
@@ -264,7 +266,7 @@ public class Frontend {
         System.out.println("\nDelete Mode");
         System.out.println("--------");
         System.out.println("You will now enter information for the aiport to be deleted."
-            + " Type 'x' at any point to exit delete mode.");
+                + " Type 'x' at any point to exit delete mode.");
         // Enter the airport's ID to be deleted
         System.out.print("\nEnter Airport's abbreviation to be deleted: ");
         String abbr = scanner.next();
@@ -272,11 +274,11 @@ public class Frontend {
             return;
         boolean removed = backend.removeAirport(abbr);
         if(!removed) System.out.println("Airport was unable to be removed. Possible issue:"
-            + " Check ID spelling");
+                + " Check ID spelling");
     }
-    
+
     /**
-     * The program enters findShortestPath mode when 'f' is entered. Here, the user is able to 
+     * The program enters findShortestPath mode when 'f' is entered. Here, the user is able to
      * retrieve the shortest path between 2 airports. Entering 'x' at any time will exit the method.
      *
      * @param backend the backend object is used to access the shortest paths for aiport objects
@@ -287,10 +289,10 @@ public class Frontend {
             System.out.println("\nSearch for a Shortest Path");
             System.out.println("-----------");
             System.out.println("You will be able to search for the shortest path between 2 "
-                + "airports (Type 'x' at any point to exit this mode):");
+                    + "airports (Type 'x' at any point to exit this mode):");
             System.out.println();
             System.out.println("Enter the airport ID of the departure airport:");
-            
+
             // Asks user for departure and arrival airports
             String departure = scanner.next();
             if (departure.equals("x"))
@@ -299,87 +301,87 @@ public class Frontend {
             String arrival = scanner.next();
             if (arrival.equals("x"))
                 return;
-            
+
             // Retrieves the shortest path from inputted airports
             // if user enters inexistent IDs, exception is thrown & caught
             List<AirportInterface> shortestPathList;
             try {
-              shortestPathList = backend.getAirportShortestPath(departure, arrival);
+                shortestPathList = backend.getAirportShortestPath(departure, arrival);
             }catch (NoSuchElementException e) {
-              System.out.println("Error: Invalid airport ID(s) submitted"); return;
+                System.out.println("Error: Invalid airport ID(s) submitted"); return;
             }
             // Some airports have no flights that can connect them (really rare)
             if(shortestPathList.size() == 0) {
-              System.out.println("Error: Unable to find shortest path between airports. Check that"
-                  + " a reachable path exists from the departure airport "
-                  + "(see \"Getting Reachable Airport\" Mode)");
-              return;
+                System.out.println("Error: Unable to find shortest path between airports. Check that"
+                        + " a reachable path exists from the departure airport "
+                        + "(see \"Getting Reachable Airport\" Mode)");
+                return;
             } else {
-              // If there's no error retrieving shortest paths, the airports are displayed
-              System.out.println("----------------------------------");
-              System.out.println("Shortest path from " + departure + " to " + arrival + ":");
-              String conc = "Start:";
-              int dist = 0;
-              for (AirportInterface air: shortestPathList) {
-                conc += air.getID() + " -> ";
-                dist += backend.getDistanceForAirportPath(departure, arrival);
-              }
-              System.out.println(conc.substring(0,conc.length()-4));
-              System.out.println("Total Distance: " + dist + "km");
-           }
+                // If there's no error retrieving shortest paths, the airports are displayed
+                System.out.println("----------------------------------");
+                System.out.println("Shortest path from " + departure + " to " + arrival + ":");
+                String conc = "Start:";
+                int dist = 0;
+                for (AirportInterface air: shortestPathList) {
+                    conc += air.getID() + " -> ";
+                    dist += backend.getDistanceForAirportPath(departure, arrival);
+                }
+                System.out.println(conc.substring(0,conc.length()-4));
+                System.out.println("Total Distance: " + dist + "km");
+            }
         }
     }
 
     /**
      * The program enters findReachableAirports mode when 'g' is entered. Here, the user is able to
      * find the reachable airports from an airport of their choice. Entering 'x' at any time will exit the method.
-     * 
+     *
      * @param backend the backend object is used to access is used to access the reachable airports for this airport object
      */
     public void findReachableAirports(BackendInterface backend) {
-      while (true) {
-        // while loop runs so that this mode is only exited using 'x'
-        System.out.println("\nSearch for reachable airports");
-        System.out.println("-----------");
-        System.out.println("You will be able to search reachable airports from any airport of choice"
-            + " (Type 'x' at any point to exit this mode):");
-        System.out.println();
-        System.out.println("Enter the airport ID of the airport to look through and find "
-            + "reachable airports:");
-        
-        // Asks user for departure and arrival airports
-        String departure = scanner.next();
-        if (departure.equals("x"))
-            return;
+        while (true) {
+            // while loop runs so that this mode is only exited using 'x'
+            System.out.println("\nSearch for reachable airports");
+            System.out.println("-----------");
+            System.out.println("You will be able to search reachable airports from any airport of choice"
+                    + " (Type 'x' at any point to exit this mode):");
+            System.out.println();
+            System.out.println("Enter the airport ID of the airport to look through and find "
+                    + "reachable airports:");
 
-        // Retrieves the shortest path from inputted airports
-        // if user enters inexistent IDs, exception is thrown & caught
-        List<AirportInterface> ReachableAirportList;
-        try {
-          ReachableAirportList = backend.getReachableAirports(departure);
-        }catch (NoSuchElementException e) {
-          System.out.println("Error: Invalid airport ID submitted"); return;
+            // Asks user for departure and arrival airports
+            String departure = scanner.next();
+            if (departure.equals("x"))
+                return;
+
+            // Retrieves the shortest path from inputted airports
+            // if user enters inexistent IDs, exception is thrown & caught
+            List<AirportInterface> ReachableAirportList;
+            try {
+                ReachableAirportList = backend.getReachableAirports(departure);
+            }catch (NoSuchElementException e) {
+                System.out.println("Error: Invalid airport ID submitted"); return;
+            }
+            if(ReachableAirportList.size() == 0) {
+                System.out.println("No airports can be reached from " + departure);
+            } else {
+                // If there's no error retrieving shortest paths, the airports are displayed
+                System.out.println("----------------------------------");
+                System.out.println("Reachable airports from " + departure + ": ");
+                String conc = "";
+                int counter = 1;
+                for (AirportInterface air: ReachableAirportList) {
+                    conc += counter + ") ID: " + air.getID() + " Distance: " +
+                            backend.getDistanceForAirportPath(departure, air.getID()) + "km\n";
+                    counter++;
+                }
+                System.out.println(conc);
+                return;
+            }
         }
-        if(ReachableAirportList.size() == 0) {
-          System.out.println("No airports can be reached from " + departure);
-        } else {
-          // If there's no error retrieving shortest paths, the airports are displayed
-          System.out.println("----------------------------------");
-          System.out.println("Reachable airports from " + departure + ": ");
-          String conc = "";
-          int counter = 1;
-          for (AirportInterface air: ReachableAirportList) {
-            conc += counter + ") ID: " + air.getID() + " Distance: " + 
-                backend.getDistanceForAirportPath(departure, air.getID()) + "km\n";
-            counter++;
-          }
-          System.out.println(conc);
-          return;
-        }
-      }
     }
-  
-    
+
+
     /**
      * This method is used to display a list of pokemon in a visually pleasing manner
      *
@@ -404,8 +406,8 @@ public class Frontend {
         System.out.println("---------------------------------");
     }
     */
-    
-    
+
+
     /**
      * After the program has finished executing (x is entered from the main screen), the
      * program will call this method to display the thank you message and end the program.
