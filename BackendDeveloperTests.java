@@ -33,7 +33,7 @@ public class BackendDeveloperTests {
     public void instantiateBackend() {
         FileReader reader;
         try {
-            reader = new FileReader("src/flights.csv");
+            reader = new FileReader("flights.csv");
             backend = new Backend(reader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
