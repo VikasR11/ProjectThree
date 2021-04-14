@@ -12,16 +12,23 @@ AirportInterface.java - Arnav Karnik
 Airport.java - Arnav Karnik
 DataReaderInterface.java - Arnav Karnik
 DataReader.java - Arnav Karnik
+DataWranglerTests.java - Arnav Karnik
+DataWrangler_README.txt - Arnav Karnik
 
 BackendInterface.java - Rohan Putcha 
 Backend.java - Rohan Putcha 
+BackEndDeveloperTests.java - Rohan Putcha
 BackEndDeveloper_README.txt - Rohan Putcha 
 
 Frontend.java - Jacopo Franciosi
+FrontEndDeveloperTests.java - Jacopo Franciosi
+FrontEndDeveloper_README.txt - Jacopo Franciosi
 
 CS400Graph.java - Vikas Raaja 
 flights.csv - Vikas Raaja 
 GraphADT.java - CS400 Staff (Added by Vikas Raaja)
+Makefile - Vikas Raaja
+IntegrationManager_README.txt - Vikas Raaja (this file)
 
 
 Instructions to Build, Run and Test your Project:
