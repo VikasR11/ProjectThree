@@ -22,7 +22,7 @@ Additional Contributions:
  like: organizing team communication, creating extra tests or dummy classes,
  assisting team members in any way, etc.>
 
-Cleaned up code after everyone finished their individual classes in order for the application to work bug-free.
+Cleaned up code after everyone finished their individual classes in order for the application to work bug-free. Also created a DataReaderDummy to test implementation of the backend.
 
 Signature:
 ----------
