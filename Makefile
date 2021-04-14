@@ -2,7 +2,19 @@ run: compile
         java Frontend 
 
 compile: Airport.class AirportInterface.class DataReaderInterface.class DataReader.class Backend.class BackendInterface.class Frontend.class CS400Graph.class GraphADT.class 
-        
+
+Airport.class: Airport.java
+	javac Airport.java
+
+AirportInterface.class: AirportInterface.java
+	javac AirportInterface.java
+
+DataReader.class: DataReader.java
+	javac DataReader.java
+
+DataReaderInterface.class: DataReaderInterface.java
+	javac DataReaderInterface.java
+	
 BackendInterface.class: BackendInterface.java
 	javac BackendInterface.java
         
@@ -17,19 +29,7 @@ CS400Graph.class: CS400Graph.java
 
 GraphADT.class: GraphADT.java
 	javac GraphADT.java
-
-Airport.class: Airport.java
-	javac Airport.java
-
-DataReader.class: DataReader.java
-	javac DataReader.java
-
-AirportInterface.class: AirportInterface.java
-	javac AirportInterface.java
-
-DataReaderInterface.class: DataReaderInterface.java
-	javac DataReaderInterface.java
-
+	
 test: testData testBackend testFrontend
 
 testData: DataReader.class
