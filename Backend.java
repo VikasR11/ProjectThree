@@ -72,6 +72,7 @@ public class Backend implements BackendInterface {
      * @param endAirportID the ID of the destination airport provided as a string
      * @return the list of airports (in order) that the user must go through for the shortest path from one place
      * to another (decided by total distance of path).
+     * @throws NoSuchElementException if the provided string IDs for source and destination do not exist in the tracker
      */
     @Override
     public List<AirportInterface> getAirportShortestPath(String startAirportID, String endAirportID) {
@@ -84,8 +85,8 @@ public class Backend implements BackendInterface {
                     stringToAirport.get(startAirportID), stringToAirport.get(endAirportID));
         } catch (NoSuchElementException e) {
             // if this exception is thrown, that means that there is no path between the provided airports. It does
-            // not mean that one of the vertices does not exist in the graph, because that is handled in the if statement
-            // above this try-catch block
+            // not mean that one of the vertices does not exist in the graph, because that is handled in the if
+            // statement above this try-catch block
             return new ArrayList<>(); // this empty list means there is no flight connection - frontend handles this
         }
         return shortestPath;
@@ -129,7 +130,7 @@ public class Backend implements BackendInterface {
         if (!stringToAirport.containsKey(sourceID) || !stringToAirport.containsKey(destinationID))
             return false;
         AirportInterface sourceAirport = stringToAirport.get(sourceID);
-        AirportInterface destinationAirport = stringToAirport.get(sourceID);
+        AirportInterface destinationAirport = stringToAirport.get(destinationID);
 
         // inserting an edge returns a boolean, so that will be returned to the frontend as well to be accurate about
         // whether the flight was actually added or not
@@ -143,6 +144,7 @@ public class Backend implements BackendInterface {
      *
      * @param origin the origin airport's string ID to find reachable airports
      * @return a list of reachable airports from the provided origin airport
+     * @throws NoSuchElementException if the provided string ID for the origin airport does not exist in the tracker
      */
     @Override
     public List<AirportInterface> getReachableAirports(String origin) {
@@ -152,6 +154,8 @@ public class Backend implements BackendInterface {
         AirportInterface originAirport = stringToAirport.get(origin);
         ArrayList<AirportInterface> reachableAirports = new ArrayList<>();
         for (AirportInterface airport : listOfAirports) {
+            if (airport.getID().equals(origin))
+                continue; // if the airport is trying to reach itself, skip this airport since it is not relevant data
             try {
                 airportSystem.shortestPath(originAirport, airport);
                 // at this point, if the dijkstras path throws a NoSuchElementException, that
@@ -205,7 +209,7 @@ public class Backend implements BackendInterface {
 
         // removing an edge returns a boolean, so that will be returned to the frontend as well to be accurate about
         // whether the flight was actually removed or not
-        return airportSystem.removeEdge(stringToAirport.get(origin), stringToAirport.get(destination));
+        return airportSystem.removeEdge(sourceAirport, destinationAirport);
     }
 
     /**
@@ -216,6 +220,7 @@ public class Backend implements BackendInterface {
      * @param startAirportID the string ID that represents the starting airport
      * @param endAirportID the string ID that represents the destination airport
      * @return the cost of travelling in the shortest path between the two airports as a double
+     * @throws NoSuchElementException if the provided string IDs for source and destination do not exist in the tracker
      */
     @Override
     public double getPriceForAirportPath(String startAirportID, String endAirportID) {
@@ -259,8 +264,8 @@ public class Backend implements BackendInterface {
      *
      * @param startAirportID the string ID of the starting airport
      * @param endAirportID the string ID of the destination airport
-     * @return an integer representing the total distance between the two airports in km.
-     * @throws NoSuchElementException if the provided string
+     * @return an integer representing the total distance between the two airports in km. -1 if no flight connection
+     * @throws NoSuchElementException if the provided string IDs for source and destination do not exist in the tracker
      */
     @Override
     public int getDistanceForAirportPath(String startAirportID, String endAirportID) throws NoSuchElementException {
