@@ -37,7 +37,10 @@ Instructions to Build, Run and Test your Project:
 
 Team Member Contributions: 
 --------------------------
-Everyone in my team worked hard, smart, and effeciciently to implement this project. We all held group meetings in our discord chat everyday during implementation week to assist each other. Everyone was always willing to help one another to make sure we had the best possible implementation. In addition, planning and communication was solid throughout. Overall, we worked strongly as a team and consistently met our deadlines. 
+Everyone in my team worked hard, smart, and effeciciently to implement this project. We all held group 
+meetings in our discord chat everyday during implementation week to assist each other. Everyone was 
+always willing to help one another to make sure we had the best possible implementation. In addition, planning and 
+communication was solid throughout. Overall, we worked strongly as a team and consistently met our deadlines. 
 
 Signature:
 ----------
