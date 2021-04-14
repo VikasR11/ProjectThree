@@ -47,7 +47,7 @@ DataReader.class: DataReader.java
 TestBackend.class: TestBackend.java
 	javac TestBackend.java
 
-TestFrontend.class: TestFrontend.java
+TestFrontend.class: FrontEndDeveloperTests.java
 	javac TestFrontend.java
 
 clean:
