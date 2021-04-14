@@ -131,13 +131,13 @@ public class Frontend {
         String abbr = scanner.next();
         if (abbr.equals("x"))
             return;
-
+        
+        scanner.useDelimiter(System.lineSeparator());
         System.out.println("\nEnter Airport's name: ");
         String name = scanner.next();
         if (name.equals("x"))
             return;
 
-        scanner.useDelimiter(System.lineSeparator());
         System.out.println("\nEnter Airport's list of reachable airports (by abbreviation)"
                 + " like so: SFO,TUL,YWG");
         String reachAirports = scanner.next();
