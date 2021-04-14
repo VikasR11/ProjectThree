@@ -32,8 +32,8 @@ GraphADT.class: GraphADT.java
 	
 test: testData testBackend testFrontend
 
-testData: DataReader.class
-	java DataReader
+testData: DataWranglerTests.class
+	java DataWranglerTests
 	
 testBackend: TestBackend.class
 	java TestBackend
@@ -41,8 +41,8 @@ testBackend: TestBackend.class
 testFrontend: FrontEndDeveloperTests.class
 	java FrontEndDeveloperTests
 	
-DataReader.class: DataReader.java
-	javac DataReader.java	
+DataWranglerTests.class: DataWranglerTests.java
+	javac DataWranglerTests.java	
 
 TestBackend.class: TestBackend.java
 	javac TestBackend.java
