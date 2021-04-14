@@ -1,0 +1,124 @@
+Last login: Tue Apr 13 16:41:31 on ttys000
+(base) vikas@Vikass-MacBook-Air ~ % ssh raaja@34.123.126.194
+raaja@34.123.126.194's password: 
+Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-1040-gcp x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Tue Apr 13 23:49:03 UTC 2021
+
+  System load:  0.08              Processes:             111
+  Usage of /:   37.9% of 9.52GB   Users logged in:       0
+  Memory usage: 48%               IPv4 address for ens4: 10.128.0.2
+  Swap usage:   0%
+
+ * Introducing self-healing high availability clusters in MicroK8s.
+   Simple, hardened, Kubernetes for production, from RaspberryPi to DC.
+
+     https://microk8s.io/high-availability
+
+49 updates can be installed immediately.
+0 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Tue Apr 13 21:42:10 2021 from 24.12.160.83
+raaja@first:~$ ls
+'#NewTextFile.txt#'               RotationActivity.tar.gz
+ BashActivity                     TestBackend.java
+ BashActivity.tar.gz              bin.txt
+ Documents                        cgi-bin
+ EditorActivity                   cgi_activity
+ EditorActivity.tar.gz            cgi_activity.tar.gz
+ EditorActivity.tar.gz.1          copyFile.txt
+ FirstGitActivity                 dessertInTheDesertGame.html
+ FirstGitActivity.tar.gz          firstJava
+ GenericsActivity                 gitdemo
+ GenericsActivity.tar.gz          html
+ LambdaExpression                 html_activity
+ LambdaExpression.tar.gz          html_activity.tar.gz
+ ProjectOneFinalApp               jardemo
+ ProjectOneFinalApp.tar.gz        junit5.jar
+ ProjectThreeFinalApp             junit_activity
+ ProjectThreeFinalApp.tar.gz      junit_activity.tar.gz
+ ProjectTwoFinalApp               junitdemo
+ ProjectTwoFinalApp.tar.gz        make_activity
+ ProjectTwoProposalTests          make_activity.tar.gz
+ ProjectTwoProposalTests.tar.gz   projectOne-tests
+ RegexActivity                    projectOne-tests.tar.gz
+ RegexActivity.tar.gz             sampleFile.txt
+ RotationActivity
+raaja@first:~$ cd cgi_activity
+raaja@first:~/cgi_activity$ ls
+CSVTOHTML.java  Makefile  csv.cgi  data.csv  upload
+raaja@first:~/cgi_activity$ vim CSVTOHTML.java
+raaja@first:~/cgi_activity$ vim CSVTOHTML.java
+raaja@first:~/cgi_activity$ cd ../
+raaja@first:~$ cd html
+raaja@first:~/html$ ls
+backup.html  index.html  input.html  tables.html
+raaja@first:~/html$ vim tables.html
+raaja@first:~/html$ cd ../
+raaja@first:~$ vim CSVTOHTML.java
+raaja@first:~$ cd cgi_activity
+raaja@first:~/cgi_activity$ vim CSVTOHTML.java
+raaja@first:~/cgi_activity$ cd ProjectThreeFinalApp
+-bash: cd: ProjectThreeFinalApp: No such file or directory
+raaja@first:~/cgi_activity$ cd ../
+raaja@first:~$ cd ProjectThreeFinalApp
+raaja@first:~/ProjectThreeFinalApp$ ls
+BackEndDeveloper_README.txt  FrontEndDeveloper_README.txt   Makefile             submitProject
+DataWrangler_README.txt      IntegrationManager_README.txt  shareFolderWithTeam
+raaja@first:~/ProjectThreeFinalApp$ cd submitProject
+-bash: cd: submitProject: Not a directory
+raaja@first:~/ProjectThreeFinalApp$ vim submitProject
+
+#!/usr/bin/env bash
+
+PROJECTNAME="ProjectThree"
+#note that this script excludes the junit5.jar
+
+check() {
+    SIZE=$(du -s | cut -f 1) # ensure folder size is under 10MB
+    if [[ $SIZE -gt 10240 ]]; then abort "submission too large: $SIZE > 10240 limit"; fi
+    # make additional checks as needed
+}
+
+main() {
+    read -p "Enter your CSL username: " USERNAME
+    read -p "Enter your group name (two letters): " GROUPNAME
+    GROUPNAME=${GROUPNAME^^} # make upper case
+    read -p "Enter team color for this submission [R]ed or [B]lue: " TEAMCOLOR
+    TEAMCOLOR=${TEAMCOLOR:0:1}
+    if [[ ${TEAMCOLOR^} = "R" ]]; then
+        TEAMCOLOR="Red";
+    elif [[ ${TEAMCOLOR^} = "B" ]]; then
+        TEAMCOLOR="Blue"
+    else
+        echo "Did not recognize color starting with letter: \'${TEAMCOLOR^}\'"
+        exit 1
+    fi
+    TEAMFOLDER="teams/$GROUPNAME-$TEAMCOLOR"
+
+    if [[ $# -eq 0 ]]; then  # submit contents of current folder
+        submit
+    elif [[ $1 == -download ]]; then # retrieve archive or recent submission
+        download
+    else # display usage message
+        echo 'Usage: submitProject [-download]'
+        echo 'Run "submit" to record the contents of your working directory as a submission for this group project.'
+        echo 'Run "submit -download" to retrieve an archive of your teams most recent submission in a file named recent.tar.gz.'
+    fi
+}
+
+submit() {
+    echo "Checking submission contents... "
+    check
+    echo "Transferring files (you may be prompted for your csl password for this)... "
+    SUBMISSION=$(TZ=UTC+6 date +"%Y.%m.%d-%H.%M.%S")
+    # if hidden files other than . and .. exist, then make sure to copy them
+    if ls ./.[^.]* > /dev/null 2>&1; then
+        rsync -r --exclude junit5.jar ./{*,.[^.]*} --rsync-path="mkdir -p /p/course/cs400/activities/submissions/${TEAMFOLDER}/${PRO@@@                                                                                                                                 
+                                                                                                                  1,1           Top
