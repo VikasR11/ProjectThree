@@ -38,7 +38,7 @@ public class Frontend {
     public Frontend() {
         BufferedReader filein = null;
         try {
-            FileReader reader = new FileReader("src/flights.csv"); // path to csv
+            FileReader reader = new FileReader("flights.csv"); // path to csv
             filein = new BufferedReader(reader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
