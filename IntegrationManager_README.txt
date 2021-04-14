@@ -12,6 +12,7 @@ AirportInterface.java - Arnav Karnik
 Airport.java - Arnav Karnik
 DataReaderInterface.java - Arnav Karnik
 DataReader.java - Arnav Karnik
+DataWranglerTests.java - Arnav Karnik
 DataWrangler_README.txt - Arnav Karnik
 
 BackendInterface.java - Rohan Putcha 
