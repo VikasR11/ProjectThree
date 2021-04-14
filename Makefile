@@ -38,8 +38,8 @@ testData: DataReader.class
 testBackend: TestBackend.class
 	java TestBackend
 	
-testFrontend: TestFrontend.class
-	java TestFrontend
+testFrontend: FrontEndDeveloperTests.class
+	java FrontEndDeveloperTests
 	
 DataReader.class: DataReader.java
 	javac DataReader.java	
@@ -47,8 +47,8 @@ DataReader.class: DataReader.java
 TestBackend.class: TestBackend.java
 	javac TestBackend.java
 
-TestFrontend.class: FrontEndDeveloperTests.java
-	javac TestFrontend.java
+FrontEndDeveloperTests.class: FrontEndDeveloperTests.java
+	javac FrontEndDeveloperTests.java
 
 clean:
         $(RM) *.class
