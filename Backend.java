@@ -338,6 +338,7 @@ public class Backend implements BackendInterface {
      * Additional method used by the frontend to list all possible airport IDs. Since only the backend class
      * has access to the graph elements (airports), it is placed here.
      */
+    @Override
     public void getGraph() {
         for (AirportInterface a : listOfAirports)
             System.out.println(a.getID() + ": "+a.getName());
