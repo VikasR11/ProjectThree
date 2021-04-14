@@ -17,7 +17,9 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * The Frontend class connects the backend implementation to the user through commands. The user may add Pokemon
+ * The Frontend class connects the backend implementation to the user through commands. The user can track flights,
+ * add airports with connecting flights going in and out, remove airports, find ticket prices, 
+ * find shortest trips from one airport to another, and find reachable airports from one airport to another
  * and search (using various criteria) for Pokemon, accessing the backend through Frontend commands in this class.
  *
  * @author Jacopo Franciosi
@@ -28,11 +30,10 @@ public class Frontend {
     private Scanner scanner; // the scanner used throughout the program maintaining the same input buffer
 
     /**
-     * Constructor takes no arguments and instantiates a scanner to be used in prompts and
-     * the starting ID for all new Pokemon. The constructor is essential in providing the path for the CSV
-     * file where all existing pokemon data is accessed. This should always be run first in order to use
-     * frontendObj.inputFile to use as a parameter in creating a Backend object. An example of this is in
-     * the main method of the application.
+     * Constructor takes no arguments and instantiates a scanner to be used in prompts.
+     * The constructor is essential in providing the path for the CSV file where all flights/airports
+     * are accessed. This should always be run first in order to use frontendObj.inputFile to use as
+     * a parameter in creating a Backend object. An example of this is in the main method of the application.
      */
     public Frontend() {
         BufferedReader filein = null;
@@ -69,8 +70,9 @@ public class Frontend {
     }
 
     /**
-     * This is the main menu where all options can be accessed. From here, the program may enter 3 other states:
-     * add mode, search mode, exit program screen. Depending on user input, these different states may be accessed.
+     * This is the main menu where all options can be accessed. From here, the program may enter 5 other states:
+     * add mode, delete mode, shortest path mode, reachable airports mode, total price mode,
+     * display airports mode, and exit mode. Depending on user input, these different states may be accessed.
      * There is a while loop that is continuously run so that other states can simply return and the application
      * will proceed to run again and again without needing inefficient recursion (very large call stacks).
      *
@@ -90,8 +92,9 @@ public class Frontend {
             System.out.println("\t2) Enter 'd' to go to delete mode");
             System.out.println("\t2) Enter 'f' to find the shortest path");
             System.out.println("\t3) Enter 'g' to find reachable airports from an airport");
-            System.out.println("\t4) Enter 'y' to display the current existing airports!");
-            System.out.println("\t5) Enter 'x' to exit the program");
+            System.out.println("\t4) Enter 'p' to get the total ticket price for a flight!");
+            System.out.println("\t5) Enter 'y' to display the current existing airports!");
+            System.out.println("\t6) Enter 'x' to exit the program");
             System.out.println();
 
             String command = scanner.next();
@@ -105,6 +108,8 @@ public class Frontend {
                 findShortestPath(backend);
             else if (command.equals("g"))
                 findReachableAirports(backend);
+            else if (command.equals("p"))
+              findTotalPrice(backend);
             else if (command.equals("y"))
                 backend.getGraph();
         }
@@ -131,8 +136,8 @@ public class Frontend {
         String abbr = scanner.next();
         if (abbr.equals("x"))
             return;
-
         scanner.useDelimiter(System.lineSeparator());
+
         System.out.println("\nEnter Airport's name: ");
         String name = scanner.next();
         if (name.equals("x"))
@@ -349,12 +354,12 @@ public class Frontend {
             System.out.println("Enter the airport ID of the airport to look through and find "
                     + "reachable airports:");
 
-            // Asks user for departure and arrival airports
+            // Asks user for departure airport
             String departure = scanner.next();
             if (departure.equals("x"))
                 return;
 
-            // Retrieves the shortest path from inputted airports
+            // Retrieves the reachable airports from inputted airports
             // if user enters inexistent IDs, exception is thrown & caught
             List<AirportInterface> ReachableAirportList;
             try {
@@ -383,30 +388,52 @@ public class Frontend {
 
 
     /**
-     * This method is used to display a list of pokemon in a visually pleasing manner
+     * The program enters find price mode when 'p' is entered. Here, the user is able to
+     * find the total ticket price from traveling from one airport to another. Entering 'x' at any time will exit the method.
      *
-     * @param pokemon the list of pokemon that are to be displayed as search results
+     * @param backend the backend object is used to access is used to access the price attributes for this and other airports
+     * and for flights going to other airports too.
      */
-    /*
-    public void displayPokemon(List<PokemonInterface> pokemon) {
-        System.out.println("----------------------------------");
-        System.out.println("Pokemon matching search results:");
-        String builder;
-        // iterate through the pokemon in the list (based on whatever parameter) and print info
-        for (PokemonInterface p : pokemon) {
-            builder = "ID#"+p.getID() + "\t" + p.getName();
-            builder = builder + "\n\tCP:\t"+ p.getCP();
-            builder = builder + "\n\tRegion: " + p.getRegion();
-            builder = builder + "\n\tType(s): " + p.getTypes()[0];
-            if (p.getTypes()[1] != null) // if the second type exists, add it to the output
-                builder = builder + "\t" + p.getTypes()[1];
-            System.out.println(builder);
+    public void findTotalPrice(BackendInterface backend) {
+        while (true) {
+            // while loop runs so that this mode is only exited using 'x'
+            System.out.println("\nCalculate Total Flight Price");
+            System.out.println("-----------");
+            System.out.println("You will be able to calculate the total price from one airport to another"
+                    + " (Type 'x' at any point to exit this mode):");
             System.out.println();
-        }
-        System.out.println("---------------------------------");
-    }
-    */
+            System.out.println("Enter the airport ID of the departure airport:");
 
+            // Asks user for departure and arrival airports
+            String departure = scanner.next();
+            if (departure.equals("x"))
+                return;
+            System.out.println("Enter the airport ID of the arrival airport:");
+            String arrival = scanner.next();
+            if (arrival.equals("x"))
+                return;
+            
+            // Retrieves the total ticket price from inputted airports
+            // if user enters inexistent IDs, exception is thrown & caught
+            double price = 0.0;
+            try {
+                price = backend.getPriceForAirportPath(departure,arrival);
+            }catch (NoSuchElementException e) {
+              System.out.println("Error: Invalid airport ID(s) submitted"); return;
+            }
+            if(price == 0.0) {
+                System.out.println("Error: Unable to find the ticket price between airports. Check that"
+                    + " a reachable path exists from the departure airport to the arrival airport "
+                    + "(see \"Getting Reachable Airport\" Mode)");
+                return;
+            } else {
+                // If there's no error retrieving shortest paths, the airports are displayed
+                System.out.println("----------------------------------");
+                System.out.println("Total ticket price from airport " + departure + " to airport "
+                    + arrival + ": " + "$" + price); return;
+            }
+        }
+    }
 
     /**
      * After the program has finished executing (x is entered from the main screen), the
